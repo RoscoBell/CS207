@@ -34,11 +34,122 @@ const long interval = 1000;
 // example for more information on possible values.
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 byte color = 0;
+int b = 0;
+int c = 0;
+
+/*Set up rotating patterns
+//void spinner() {
+  int spokes[][12] = {{0, 1, 2, 3, 4},
+    {5, 6, 7, 8, 9},
+    {10, 11, 12, 13, 14},
+    {15, 16, 17, 18, 19},
+    {20, 21, 22, 23, 24},
+    {25, 26, 27, 28, 29},
+    {30, 31, 32, 33, 34},
+    {35, 36, 37, 38, 39},
+    {40, 41, 42, 43, 44},
+    {45, 46, 47, 48, 49},
+    {50, 51, 52, 53, 54},
+    {55, 56, 57, 58, 59}
+  };
+  int pattern[][12] = {
+    {0, random(0, 255), random(0, 255), random(0, 255), random(0, 255)}, {random(0, 255), 0, random(0, 255), random(0, 255), random(0, 255)}, {random(0, 255), random(0, 255), 0, random(0, 255), random(0, 255)}, {random(0, 255), random(0, 255), random(0, 255), 0, random(0, 255)}, {random(0, 255), random(0, 255), random(0, 255), random(0, 255), 0}, {random(0, 255), random(0, 255), random(0, 255), random(0, 255), random(0, 255)}
+    , {0, random(0, 255), random(0, 255), random(0, 255), random(0, 255)}, {random(0, 255), 0, random(0, 255), random(0, 255), random(0, 255)}, {random(0, 255), random(0, 255), 0, random(0, 255), random(0, 255)}, {random(0, 255), random(0, 255), random(0, 255), 0, random(0, 255)}, {random(0, 255), random(0, 255), random(0, 255), random(0, 255), 0}, {random(0, 255), random(0, 255), random(0, 255), random(0, 255), random(0, 255)}
+  };
+  int delayTime = delayTime;
+  int n = 0;
+  int q = 0;
+  int m = 0;
+  int j = 0;
+
+  for (int n = 0; n <= 2; n++) {
+    fill(); fill();
+    for (int q = 0; q <= 11; q++) {
+      for (int m = 0; m < 12; m++) {
+        for (int j = 0; j <= 4; j++) {
+          pixels.setPixelColor(spokes[m][j], pattern[q][j, pixels.Color(q, j, n)]);
+          pixels.show();
+          delay(delayTime);
+        }
+      }
+    }
+  }
+}*/
+
+//Fill kaleidoscope with spokes of random color
+void fill() {
+  int delayTime = delayTime;
+  for (int i = 0; i < NUMPIXELS && i <= 4; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 5; i < NUMPIXELS && i <= 9; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 10; i < NUMPIXELS && i <= 14; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 15; i < NUMPIXELS && i <= 19; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 20; i < NUMPIXELS && i <= 24; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 25; i < NUMPIXELS && i <= 29; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 30; i < NUMPIXELS && i <= 34; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 35; i < NUMPIXELS && i <= 39; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 40; i < NUMPIXELS && i <= 44; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 45; i < NUMPIXELS && i <= 49; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 50; i < NUMPIXELS && i <= 54; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  for (int i = 55; i < NUMPIXELS && i <= 59; i++) {
+    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color)));
+    pixels.show();
+    delay(15);
+  }
+  c++;
+}
+
+
 
 void setup() {
+  Serial.begin(9600);
   //turn on LED to signal start of the calibration
   pinMode(ledPin, OUTPUT);
   digitalWrite(ledPin, HIGH);
+
 
   // calibrate during the first five seconds
   while (millis() < 5000) {
@@ -66,86 +177,72 @@ void loop() {
 
   // Adjust the values below to conform to the maximum and minimum
   // numbers you get from the sensor
-  int delayT = map(sensorValue, sensorHigh, sensorLow, 5, 50);
-  if (delayT < 5)
+  int delayTime = map(sensorValue, sensorLow, sensorHigh, 5, 15);
+  if (delayTime <= 5)
   {
-    delayT = 5;
+    delayTime = 5;
   }
-  else if (delayT > 50)
+  else if (delayTime >= 15)
   {
-    delayT = 50;
+    delayTime = 15;
   }
 
-  // For a set of NeoPixels the first NeoPixel is 0, second is 1, all the way up to the count of pixels minus one.
+
   color = random(0, 255);
 
-  for (int i = 0; i < NUMPIXELS; i++) {
+  fill();
 
-    // pixels.Color takes RGB values, from 0,0,0 up to 255,255,255
-    pixels.setPixelColor(i, pixels.Color (random (color), random (color), random (color))); // Each pixel color is randomly determined
-    pixels.show(); // This sends the updated pixel color to the hardware.
-    delay(delayT); // Delay for a period of time (in milliseconds).
-  }
-  //The following assigns color values to each spoke in the pattern in turn
-  for (int i = 0; i < NUMPIXELS && i <= 4; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 5; i < NUMPIXELS && i <= 9; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 10; i < NUMPIXELS && i <= 14; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 15; i < NUMPIXELS && i <= 19; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 20; i < NUMPIXELS && i <= 24; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 25; i < NUMPIXELS && i <= 29; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 30; i < NUMPIXELS && i <= 34; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 35; i < NUMPIXELS && i <= 39; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 40; i < NUMPIXELS && i <= 44; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 45; i < NUMPIXELS && i <= 49; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 50; i < NUMPIXELS && i <= 54; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
-  for (int i = 55; i < NUMPIXELS && i <= 59; i++) {
-    pixels.setPixelColor(i, pixels.Color (random (color), 0, 50));
-    pixels.show(); 
-    delay(delayT); 
-  }
+//Set up rotating patterns  
+  int spokes[][12] = {{0, 1, 2, 3, 4},
+    {5, 6, 7, 8, 9},
+    {10, 11, 12, 13, 14},
+    {15, 16, 17, 18, 19},
+    {20, 21, 22, 23, 24},
+    {25, 26, 27, 28, 29},
+    {30, 31, 32, 33, 34},
+    {35, 36, 37, 38, 39},
+    {40, 41, 42, 43, 44},
+    {45, 46, 47, 48, 49},
+    {50, 51, 52, 53, 54},
+    {55, 56, 57, 58, 59}
+  };
+  int pattern[][12] = {
+    {0, random(0, 255), random(0, 255), random(0, 255), random(0, 255)}, {random(0, 255), 0, random(0, 255), random(0, 255), random(0, 255)}, {random(0, 255), random(0, 255), 0, random(0, 255), random(0, 255)}, {random(0, 255), random(0, 255), random(0, 255), 0, random(0, 255)}, {random(0, 255), random(0, 255), random(0, 255), random(0, 255), 0}, {random(0, 255), random(0, 255), random(0, 255), random(0, 255), random(0, 255)}
+    , {0, random(0, 255), random(0, 255), random(0, 255), random(0, 255)}, {random(0, 255), 0, random(0, 255), random(0, 255), random(0, 255)}, {random(0, 255), random(0, 255), 0, random(0, 255), random(0, 255)}, {random(0, 255), random(0, 255), random(0, 255), 0, random(0, 255)}, {random(0, 255), random(0, 255), random(0, 255), random(0, 255), 0}, {random(0, 255), random(0, 255), random(0, 255), random(0, 255), random(0, 255)}
+  };
+//  int delayTime = delayTime;
+  int n = 0;
+  int q = 0;
+  int m = 0;
+  int j = 0;
+
+  for (int n = 0; n <= 1; n++) {
+
+for (c = 0; c<= 5; c++) {
+    fill(); 
+
 }
+
+    for (int q = 0; q <= 11; q++) {
+
+      for (int m = 0; m < 12; m++) {
+
+        for (int j = 0; j <= 4; j++) {
+                  delay(delayTime);
+Serial.println(delayTime);
+          pixels.setPixelColor(spokes[m][j], pattern[q][j, pixels.Color(q, j, n)]);
+          pixels.show();
+
+          if (n = 0)  {
+          delay(delayTime); }
+          else {
+            delay (20);  }
+          }
+        }
+      }
+    }
+  }
+
+
+
 
