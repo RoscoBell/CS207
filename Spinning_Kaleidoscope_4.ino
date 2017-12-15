@@ -1,5 +1,5 @@
 /*Kaleidoscope with Motion-Controlled Spin
-   by Rosco Bell, Dec. 2017
+   by Rosco Bell, Dec. 15, 2017
    Based on Caleisdoscopio by José Daniel Herrera Gomariz
    http://arduino-guay.blogspot.com.es/2014/06/caleidoscopio-con-arduino-y-tiras-de.html
      and
